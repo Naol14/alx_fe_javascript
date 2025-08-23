@@ -255,5 +255,22 @@ function resolveConflicts(serverQuotes) {
   localStorage.setItem('quotes', JSON.stringify(finalQuotes));
 }
 
+async function addQuoteToServer(quote) {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST', // ✅ Required for sending data
+      headers: {
+        'Content-Type': 'application/json' // ✅ Tells server you're sending JSON
+      },
+      body: JSON.stringify(quote) // ✅ Converts quote object to JSON string
+    });
+
+    const result = await response.json();
+    console.log('Quote posted to server:', result);
+  } catch (error) {
+    console.error('Error posting quote:', error);
+  }
+}
+
 
     
