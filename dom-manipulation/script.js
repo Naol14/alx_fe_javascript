@@ -209,7 +209,7 @@ function restoreFilter() {
 
   const SERVER_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-async function syncWithServer() {
+async function syncQuotes() {
   try {
     const response = await fetch(SERVER_URL);
     const serverData = await response.json();
