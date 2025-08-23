@@ -134,17 +134,56 @@ document.body.appendChild(formDiv);
   reader.readAsText(file);
 }
 
+/*task2*/
+function populateCategories() {
+  const categories = [...new Set(quotes.map(q => q.category))];
+  const filter = document.getElementById("categoryFilter");
+  filter.innerHTML = '<option value="all">All Categories</option>';
+  categories.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat;
+    filter.appendChild(option);
+  });
+}
+
+function filterQuotes() {
+  const selectedCategory = document.getElementById("categoryFilter").value;
+  localStorage.setItem("lastSelectedCategory", selectedCategory);
+  const filtered = selectedCategory === "all"
+    ? quotes
+    : quotes.filter(q => q.category === selectedCategory);
+  showRandomQuote(filtered);
+}
+
+function restoreFilter() {
+  const savedCategory = localStorage.getItem("lastSelectedCategory");
+  if (savedCategory) {
+    document.getElementById("categoryFilter").value = savedCategory;
+    filterQuotes();
+  }
+}
+
+
 
     window.onload = loadQuotes;
+    
 
   document.addEventListener("DOMContentLoaded", function () {
       loadQuotes();
       showRandomQuote();
+      populateCategories();
 
       const newQuoteButton = document.getElementById("newQuote");
       if (newQuoteButton) {
         newQuoteButton.addEventListener("click", showRandomQuote);
       }
+      const filterBtn = document.getElementById("filterBtn");
+  if (filterBtn) {
+    filterBtn.addEventListener("click", filterQuotes);
+  }
+
+  restoreFilter();
     });
     
     
@@ -153,3 +192,5 @@ document.body.appendChild(formDiv);
     .then(data => {
       document.getElementById('container').innerHTML = data;
     });
+
+    
