@@ -194,7 +194,7 @@ function restoreFilter() {
     });
 
     /*task3*/
-    async function fetchServerQuotes() {
+    async function fetchQuotesFromServer() {
   const response = await fetch('https://jsonplaceholder.typicode.com/posts');
   const data = await response.json();
 
