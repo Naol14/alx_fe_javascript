@@ -47,6 +47,31 @@ let quotes = [];
       sessionStorage.setItem("lastQuote", JSON.stringify(quote));
     }
 
+    function createAddQuoteForm() {
+const formDiv = document.createElement('div');
+formDiv.className = 'quote-form';
+
+
+const inputText = document.createElement('input');
+inputText.type = 'text';
+inputText.placeholder = 'Enter a new quote';
+inputText.id = 'newQuoteText';
+
+const inputCategory = document.createElement('input');
+inputCategory.type = 'text';
+inputCategory.placeholder = 'Enter quote category';
+inputCategory.id = 'newQuoteCategory';
+
+const addButton = document.createElement('button');
+addButton.innerText = 'Add Quote';
+addButton.onclick = addQuote;
+
+formDiv.appendChild(inputText);
+formDiv.appendChild(inputCategory);
+formDiv.appendChild(addButton);
+document.body.appendChild(formDiv);
+}
+
     function addQuote() {
       const text = document.getElementById("quoteInput").value.trim();
       const category = document.getElementById("categoryInput").value.trim();
