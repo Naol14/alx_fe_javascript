@@ -146,3 +146,10 @@ document.body.appendChild(formDiv);
         newQuoteButton.addEventListener("click", showRandomQuote);
       }
     });
+    
+    
+    fetch('index.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('container').innerHTML = data;
+    });

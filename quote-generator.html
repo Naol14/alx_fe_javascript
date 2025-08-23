@@ -119,3 +119,9 @@ createAddQuoteForm();
     </script>
   </body>
   </html>
+
+  <h1>Dynamic Quote Generator</h1>
+  <div id="quoteDisplay">Click "Show New Quote" to begin</div>
+  <button onclick="showRandomQuote()">Show New Quote</button>
+  <button onclick="exportQuotes()">Export Quotes</button>
+  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
