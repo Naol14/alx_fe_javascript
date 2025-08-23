@@ -193,4 +193,67 @@ function restoreFilter() {
       document.getElementById('container').innerHTML = data;
     });
 
+    /*task3*/
+    async function fetchServerQuotes() {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const data = await response.json();
+
+  // Adapt the data to your quote format
+  const serverQuotes = data.map(post => ({
+    id: post.id,
+    text: post.title,
+    category: 'Server' // placeholder category
+  }));
+
+  resolveConflicts(serverQuotes);}
+
+  const SERVER_URL = 'https://jsonplaceholder.typicode.com/posts';
+
+async function syncWithServer() {
+  try {
+    const response = await fetch(SERVER_URL);
+    const serverData = await response.json();
+
+    const serverQuotes = serverData.map(post => ({
+      id: post.id,
+      text: post.title,
+      category: 'Server'
+    }));
+
+    const localQuotes = JSON.parse(localStorage.getItem('quotes')) || [];
+
+    const mergedQuotes = mergeQuotes(localQuotes, serverQuotes);
+    localStorage.setItem('quotes', JSON.stringify(mergedQuotes));
+
+    console.log('Quotes synced with server!');
+  } catch (error) {
+    console.error('Sync failed:', error);
+  }
+}
+
+function mergeQuotes(local, server) {
+  const existingIds = new Set(local.map(q => q.id));
+  const newQuotes = server.filter(q => !existingIds.has(q.id));
+  return [...local, ...newQuotes];
+}
+
+// Start periodic sync
+setInterval(syncWithServer, 30000);
+
+function resolveConflicts(serverQuotes) {
+  const localQuotes = JSON.parse(localStorage.getItem('quotes')) || [];
+
+  const merged = serverQuotes.map(serverQuote => {
+    const localMatch = localQuotes.find(q => q.id === serverQuote.id);
+    return localMatch ? serverQuote : serverQuote;
+  });
+
+  // Add any local quotes that aren't on the server
+  const localOnly = localQuotes.filter(q => !serverQuotes.some(sq => sq.id === q.id));
+  const finalQuotes = [...merged, ...localOnly];
+
+  localStorage.setItem('quotes', JSON.stringify(finalQuotes));
+}
+
+
     
