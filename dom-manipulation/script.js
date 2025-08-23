@@ -137,5 +137,12 @@ document.body.appendChild(formDiv);
 
     window.onload = loadQuotes;
 
-    loadQuotes(); 
-  showRandomQuote();
+  document.addEventListener("DOMContentLoaded", function () {
+      loadQuotes();
+      showRandomQuote();
+
+      const newQuoteButton = document.getElementById("newQuote");
+      if (newQuoteButton) {
+        newQuoteButton.addEventListener("click", showRandomQuote);
+      }
+    });
